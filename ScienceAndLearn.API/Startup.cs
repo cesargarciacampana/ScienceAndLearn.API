@@ -19,6 +19,10 @@ public class Startup
     // This method gets called by the runtime. Use this method to add services to the container
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddCors(options =>
+            options.AddDefaultPolicy(policy =>
+                policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+
         services.AddControllers();
 
 		services.AddSingleton(AutoMapperHelper.CreateMapper());
@@ -36,6 +40,8 @@ public class Startup
         {
             app.UseDeveloperExceptionPage();
         }
+
+        app.UseCors();
 
         app.UseHttpsRedirection();
 
