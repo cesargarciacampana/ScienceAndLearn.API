@@ -1,12 +1,11 @@
-﻿namespace ScienceAndLearn.API.ViewModel
+﻿namespace ScienceAndLearn.API.ViewModel;
+
+public class StatisticsViewModel
 {
-	public class StatisticsViewModel
-	{
-		public string Id { get; set; }
-		public string Game { get; set; }
-		public string User { get; set; }
-		public int Points { get; set; }
-		public int Seconds { get; set; }
-		public string Info { get; set; }
-	}
+	public string Id { get; init; } = string.Empty;
+	public string Game { get; init; } = string.Empty;
+	public string User { get; init; } = string.Empty;
+	public int Points { get; init; }
+	public int Seconds { get; init; }
+	public string Info { get; init; } = string.Empty;
 }

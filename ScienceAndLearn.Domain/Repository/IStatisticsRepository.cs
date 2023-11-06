@@ -5,14 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ScienceAndLearn.Domain.Repository
+namespace ScienceAndLearn.Domain.Repository;
+
+public interface IStatisticsRepository
 {
-	public interface IStatisticsRepository
-	{
-		Task Add(Statistics statistics);
-		Task Update(Statistics statistics);
-		Task Delete(string id);
-		Task<IEnumerable<Statistics>> GetStatisticsByGame(string game);
-		Task<Statistics> GetById(string id);
-	}
+	Task Add(Statistics statistics);
+	Task Update(Statistics statistics);
+	Task Delete(string id);
+	Task<IEnumerable<Statistics>> GetStatisticsByGame(string game);
+	Task<Statistics> GetById(string id);
 }

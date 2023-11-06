@@ -7,14 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ScienceAndLearn.DynamoDB.Mapping
+namespace ScienceAndLearn.DynamoDB.Mapping;
+
+public class DataModelMappingProfile : Profile
 {
-	public class DataModelMappingProfile : Profile
+	public DataModelMappingProfile()
 	{
-		public DataModelMappingProfile()
-		{
-			CreateMap<Statistics, StatisticsDataModel>();
-			CreateMap<StatisticsDataModel, Statistics>();
-		}
+		CreateMap<Statistics, StatisticsDataModel>();
+		CreateMap<StatisticsDataModel, Statistics>();
+
+		CreateMap<User, UserDataModel>();
+		CreateMap<UserDataModel, User>();
 	}
 }

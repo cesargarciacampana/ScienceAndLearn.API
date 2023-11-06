@@ -31,6 +31,9 @@ public class Startup
 
 		services.AddSingleton<IStatisticsService, StatisticsService>();
 		services.AddSingleton<IStatisticsRepository, StatisticsRepository>();
+
+		services.AddSingleton<IUsersService, UsersService>();
+		services.AddSingleton<IUsersRepository, UsersRepository>();
 	}
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline

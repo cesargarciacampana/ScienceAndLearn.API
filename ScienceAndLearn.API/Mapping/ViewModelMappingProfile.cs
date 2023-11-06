@@ -16,6 +16,9 @@ namespace ScienceAndLearn.DynamoDB.Mapping
 		{
 			CreateMap<Statistics, StatisticsViewModel>();
 			CreateMap<StatisticsViewModel, Statistics>();
+
+			CreateMap<User, UserViewModel>();
+			CreateMap<UserViewModel, User>();
 		}
 	}
 }

@@ -6,14 +6,13 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ScienceAndLearn.Services.Contracts
+namespace ScienceAndLearn.Services.Contracts;
+
+public interface IStatisticsService
 {
-	public interface IStatisticsService
-	{
-		Task Add(Statistics statistics);
-		Task Update(Statistics statistics);
-		Task Delete(string id);
-		Task<IEnumerable<Statistics>> GetStatisticsByGame(string game);
-		Task<Statistics> GetById(string id);
-	}
+	Task Add(Statistics statistics);
+	Task Update(Statistics statistics);
+	Task Delete(string id);
+	Task<IEnumerable<Statistics>> GetStatisticsByGame(string game);
+	Task<Statistics> GetById(string id);
 }

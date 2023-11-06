@@ -5,16 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ScienceAndLearn.DynamoDB.DataModel
+namespace ScienceAndLearn.DynamoDB.DataModel;
+
+[DynamoDBTable("scienceandlearn-statistics")]
+internal class StatisticsDataModel
 {
-	[DynamoDBTable("scienceandlearn-statistics")]
-	internal class StatisticsDataModel
-	{
-		public string Id { get; set; }
-		public string Game { get; set; }
-		public string User { get; set; }
-		public int Points { get; set; }
-		public int Seconds { get; set; }
-		public string Info { get; set; }
-	}
+	public string Id { get; init; } = string.Empty;
+	public string Game { get; init; } = string.Empty;
+	public string User { get; init; } = string.Empty;
+	public int Points { get; init; }
+	public int Seconds { get; init; }
+	public string Info { get; init; } = string.Empty;
 }
