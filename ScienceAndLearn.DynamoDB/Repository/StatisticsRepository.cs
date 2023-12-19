@@ -50,7 +50,7 @@ public class StatisticsRepository : IStatisticsRepository
 
 		var result = statisticsDbList.Select(u => mapper.Map<Statistics>(u))
 								  .ToList();
-		return result;
+		return result.OrderByDescending(x => x.Points).ThenBy(x => x.Seconds);
 	}
 
 	public async Task<Statistics> GetById(string id)
