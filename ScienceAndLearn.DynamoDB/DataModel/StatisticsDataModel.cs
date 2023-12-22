@@ -12,6 +12,7 @@ internal class StatisticsDataModel
 {
 	public string Id { get; init; } = string.Empty;
 	public string Game { get; init; } = string.Empty;
+	public string? GroupId { get; set; } = null;
 	public string User { get; init; } = string.Empty;
 	public int Points { get; init; }
 	public int Seconds { get; init; }

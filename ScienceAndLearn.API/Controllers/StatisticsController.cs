@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ScienceAndLearn.API.Helpers;
 using ScienceAndLearn.API.ViewModel;
 using ScienceAndLearn.Domain.Model;
 using ScienceAndLearn.Services.Contracts;
@@ -12,12 +12,15 @@ public class StatisticsController : Controller
 {
 	IStatisticsService statisticsService;
 	IMapper mapper;
+	AuthHelper authHelper;
 
 	public StatisticsController(IStatisticsService statisticsService,
-							 IMapper mapper)
+							 IMapper mapper,
+							 AuthHelper authHelper)
 	{
 		this.statisticsService = statisticsService;
 		this.mapper = mapper;
+		this.authHelper = authHelper;
 	}
 
 	[HttpGet]
@@ -25,7 +28,7 @@ public class StatisticsController : Controller
 	{
 		if (!string.IsNullOrEmpty(game))
 		{
-			var statisticsList = await statisticsService.GetStatisticsByGame(game);
+			var statisticsList = await statisticsService.GetStatisticsByGame(authHelper.AuthContext, game);
 			var result = statisticsList.Select(s => mapper.Map<StatisticsViewModel>(s));
 			return Ok(result);
 		}
@@ -37,7 +40,7 @@ public class StatisticsController : Controller
 	public async Task<ActionResult> Create([FromBody] StatisticsViewModel statisticsViewModel)
 	{
 		var statistics = mapper.Map<Statistics>(statisticsViewModel);
-		await statisticsService.Add(statistics);
+		await statisticsService.Add(authHelper.AuthContext, statistics);
 
 		return Ok();
 	}

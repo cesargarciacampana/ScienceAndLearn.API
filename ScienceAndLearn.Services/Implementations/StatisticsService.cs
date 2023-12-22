@@ -18,17 +18,17 @@ public class StatisticsService : IStatisticsService
 		this.statisticsRepository = statisticsRepository;
 	}
 
-	public async Task Add(Statistics statistics)
+	public async Task Add(AuthContext? authContext, Statistics statistics)
 	{
 		if (String.IsNullOrWhiteSpace(statistics.Id))
 			statistics.Id = Guid.NewGuid().ToString();
 
-		await statisticsRepository.Add(statistics);
+		await statisticsRepository.Add(authContext, statistics);
 	}
 
-	public async Task Update(Statistics statistics)
+	public async Task Update(AuthContext? authContext, Statistics statistics)
 	{
-		await statisticsRepository.Update(statistics);
+		await statisticsRepository.Update(authContext, statistics);
 	}
 
 	public async Task Delete(string id)
@@ -36,9 +36,9 @@ public class StatisticsService : IStatisticsService
 		await statisticsRepository.Delete(id);
 	}
 
-	public async Task<IEnumerable<Statistics>> GetStatisticsByGame(string game)
+	public async Task<IEnumerable<Statistics>> GetStatisticsByGame(AuthContext? authContext, string game)
 	{
-		return await statisticsRepository.GetStatisticsByGame(game);
+		return await statisticsRepository.GetStatisticsByGame(authContext, game);
 	}
 
 	public async Task<Statistics> GetById(string id)

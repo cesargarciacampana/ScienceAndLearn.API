@@ -25,15 +25,17 @@ public class StatisticsRepository : IStatisticsRepository
 		context = new DynamoDBContext(dynamoDbClient);
 	}
 
-	public async Task Add(Statistics statistics)
+	public async Task Add(AuthContext? authContext, Statistics statistics)
 	{
 		var statisticsDb = mapper.Map<StatisticsDataModel>(statistics);
+		statisticsDb.GroupId = authContext?.GroupCode;
 		await context.SaveAsync<StatisticsDataModel>(statisticsDb);
 	}
 
-	public async Task Update(Statistics statistics)
+	public async Task Update(AuthContext? authContext, Statistics statistics)
 	{
 		var statisticsDb = mapper.Map<StatisticsDataModel>(statistics);
+		statisticsDb.GroupId = authContext?.GroupCode;
 		await context.SaveAsync<StatisticsDataModel>(statisticsDb);
 	}
 
@@ -42,10 +44,23 @@ public class StatisticsRepository : IStatisticsRepository
 		await context.DeleteAsync<StatisticsDataModel>(id);
 	}
 
-	public async Task<IEnumerable<Statistics>> GetStatisticsByGame(string game)
+	public async Task<IEnumerable<Statistics>> GetStatisticsByGame(AuthContext? authContext, string game)
 	{
-		var statisticsDbList = await context.ScanAsync<StatisticsDataModel>(
-			new List<ScanCondition>() { new ScanCondition(nameof(StatisticsDataModel.Game), ScanOperator.Equal, game) })
+		List<ScanCondition> scanConditions = new()
+		{
+			new ScanCondition(nameof(StatisticsDataModel.Game), ScanOperator.Equal, game)
+		};
+
+		if (!string.IsNullOrWhiteSpace(authContext?.GroupCode))
+		{
+			scanConditions.Add(new ScanCondition(nameof(StatisticsDataModel.GroupId), ScanOperator.Equal, authContext.GroupCode));
+		}
+		else
+		{
+			scanConditions.Add(new ScanCondition(nameof(StatisticsDataModel.GroupId), ScanOperator.IsNull));
+		}
+
+		var statisticsDbList = await context.ScanAsync<StatisticsDataModel>(scanConditions)
 			.GetRemainingAsync();
 
 		var result = statisticsDbList.Select(u => mapper.Map<Statistics>(u))

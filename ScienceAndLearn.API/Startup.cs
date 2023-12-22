@@ -1,5 +1,6 @@
 using Amazon.DynamoDBv2;
 using ScienceAndLearn.API.Helpers;
+using ScienceAndLearn.API.Middleware;
 using ScienceAndLearn.Domain.Repository;
 using ScienceAndLearn.DynamoDB.Repository;
 using ScienceAndLearn.Services.Contracts;
@@ -34,6 +35,8 @@ public class Startup
 
 		services.AddSingleton<IUsersService, UsersService>();
 		services.AddSingleton<IUsersRepository, UsersRepository>();
+
+        services.AddScoped<AuthHelper>();
 	}
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
@@ -52,7 +55,9 @@ public class Startup
 
         app.UseAuthorization();
 
-        app.UseEndpoints(endpoints =>
+		app.UseMiddleware<HeaderMiddleware>();
+
+		app.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();
             endpoints.MapGet("/", async context =>
